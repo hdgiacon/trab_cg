@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+import 'package:ml_linalg/linalg.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -13,6 +14,15 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    // os pontos são definidos em cada coluna
+    Matrix matrizObjeto = Matrix.fromList([
+      [1, 7, 7, 1, 4],
+      [1, 1, 1, 1, 7],
+      [1, 1, 7, 7, 4],
+      [1, 1, 1, 1, 1]
+    ]);
+
     return Scaffold(
       backgroundColor: const Color(0xFF2e2e2e),
       appBar: AppBar(
@@ -53,7 +63,7 @@ class Home extends StatelessWidget {
                     ),
                     CustomPaint(
                       size: const Size(500.0, 500.0),
-                      painter: MyPainter()
+                      painter: MyPainter(matrizObjeto: matrizObjeto)
                     )
                   ]
                 )
@@ -67,6 +77,8 @@ class Home extends StatelessWidget {
 }
 
 class MyPainter extends CustomPainter {
+  const MyPainter({ required Matrix? matrizObjeto });
+
   @override
   void paint(Canvas canvas, Size size) {
     const pointMode = ui.PointMode.lines;
