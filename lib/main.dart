@@ -14,7 +14,25 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+
+    // ponto de vista (PA, PB, PC)
+    TextEditingController controllerA = TextEditingController();
+    TextEditingController controllerB = TextEditingController();
+    TextEditingController controllerC = TextEditingController();
+
+    // pontos do plano (P1, P2, P3)
+    TextEditingController controllerP1x = TextEditingController();
+    TextEditingController controllerP1y = TextEditingController();
+    TextEditingController controllerP1z = TextEditingController();
+
+    TextEditingController controllerP2x = TextEditingController();
+    TextEditingController controllerP2y = TextEditingController();
+    TextEditingController controllerP2z = TextEditingController();
+
+    TextEditingController controllerP3x = TextEditingController();
+    TextEditingController controllerP3y = TextEditingController();
+    TextEditingController controllerP3z = TextEditingController();
+
     // os pontos são definidos em cada coluna
     Matrix matrizObjeto = Matrix.fromList([
       [1, 7, 7, 1, 4],
@@ -22,6 +40,8 @@ class Home extends StatelessWidget {
       [1, 1, 7, 7, 4],
       [1, 1, 1, 1, 1]
     ]);
+
+    Matrix objWCS = Matrix.fromList([]);
 
     return Scaffold(
       backgroundColor: const Color(0xFF2e2e2e),
@@ -31,7 +51,8 @@ class Home extends StatelessWidget {
           "Trab de CG",
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0
           )
         ),
         centerTitle: true
@@ -49,6 +70,412 @@ class Home extends StatelessWidget {
                     width: 2.0
                   ),
                   borderRadius: const BorderRadius.all(Radius.circular(10.0))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                  child: Column(
+                    children: <Widget>[
+                      const Text(
+                        "Ponto de vista:",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                        )
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              controller: controllerA,
+                              cursorColor: Colors.white,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Expanded(
+                            child: TextField(
+                              controller: controllerB,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Expanded(
+                            child: TextField(
+                              controller: controllerC,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 30.0),
+                      const Text(
+                        "Pontos do plano:",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      const Text(
+                        "Ponto 1:",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              controller: controllerP1x,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Expanded(
+                            child: TextField(
+                              controller: controllerP1y,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Expanded(
+                            child: TextField(
+                              controller: controllerP1z,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 10.0),
+                      const Text(
+                        "Ponto 2:",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              controller: controllerP2x,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Expanded(
+                            child: TextField(
+                              controller: controllerP2y,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Expanded(
+                            child: TextField(
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              controller: controllerP2z,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 10.0),
+                      const Text(
+                        "Ponto 3:",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              controller: controllerP3x,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Expanded(
+                            child: TextField(
+                              controller: controllerP3y,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5.0),
+                          Expanded(
+                            child: TextField(
+                              controller: controllerP3z,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white
+                                  )
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.deepOrange
+                                  )
+                                )
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 30.0),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.deepOrange,
+                          fixedSize: const Size(100.0, 60.0)
+                        ),
+                        child: const Text(
+                          "Iniciar",
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                        onPressed: (){
+                          int x0 = 0, y0 = 0, z0 = 0;
+
+                          double d0, d1, d;
+
+                          double a = double.parse(controllerA.text);
+                          double b = double.parse(controllerB.text);
+                          double c = double.parse(controllerC.text);
+
+
+                          double x1 = double.parse(controllerP1x.text);
+                          double x2 = double.parse(controllerP2x.text);
+                          double x3 = double.parse(controllerP3x.text);
+
+                          double y1 = double.parse(controllerP1y.text);
+                          double y2 = double.parse(controllerP2y.text);
+                          double y3 = double.parse(controllerP3y.text);
+
+                          double z1 = double.parse(controllerP1z.text);
+                          double z2 = double.parse(controllerP2z.text);
+                          double z3 = double.parse(controllerP3z.text);
+
+
+                          double nx = (y1 - y2) * (z3 - z2) - (y3 - y2) * (z1 - z2);
+
+                          double ny = -((x1 - x2) * (z3 - z2) - (x3 - x2) * (z1 - z2));
+
+                          double nz = (x1 - x2) * (y3 - y2) - (x3 - x2) * (y1 - y2);
+
+                          d0 = x0*nx + y0*ny + z0*nz;
+
+                          d1 = a*nx + b*ny + c*nz;
+
+                          d = d0 - d1;
+
+                          Matrix matrizPerspectiva = Matrix.fromList([
+                            [d+a*nx, a*ny, a*nz, -a*d0],
+                            [b*nx, d+b*ny, b*nz, -b*d0],
+                            [c*nx, c*ny, d+c*nz, -c*d0],
+                            [nx, ny, nz, 1]
+                          ]);
+
+                          matrizObjeto = matrizPerspectiva * matrizObjeto;
+
+                          List<double> lastRow = matrizObjeto[3].toList();
+
+                          for(dynamic r in matrizObjeto){
+                            for(int k = 0; k < matrizObjeto.columnsNum; k++){
+                              r[k] = r[k] / lastRow[k];
+                            }
+                          }
+
+                          objWCS = Matrix.fromList([
+                            matrizObjeto[0].toList(),
+                            matrizObjeto[1].toList(),
+                            [1, 1, 1, 1, 1]
+                          ]);
+
+                          double uMin = 0.0, vMin = 0.0, uMax = 512.0, vMax = 384.0;
+
+                          double xMin = objWCS[0].min().ceilToDouble();
+                          double xMax = objWCS[0].max().ceilToDouble();
+
+                          double yMin = objWCS[1].min().ceilToDouble();
+                          double yMax = objWCS[1].max().ceilToDouble();
+
+                          double sx = (uMax - uMin) / (xMax - xMin);
+                          double sy = (vMax - vMin) / (yMax - yMin);
+
+                          Matrix tJV = Matrix.fromList([
+                            [sx, 0, uMin - sx * xMin],
+                            [0, -sy, sy * yMax + vMin],
+                            [0, 0, 1]
+                          ]);
+
+                          objWCS = tJV * objWCS;
+
+                          for (var element in objWCS[0]) {
+                            element.floorToDouble();
+                          }
+
+                          for (var element in objWCS[1]) {
+                            element.floorToDouble();
+                          }
+
+                          for (var element in objWCS[2]) {
+                            element.floorToDouble();
+                          }
+
+                          //print(objWCS);
+                        }
+                      )
+                    ],
+                  ),
                 )
               )
             ),
@@ -62,8 +489,8 @@ class Home extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 3,
                     ),
                     CustomPaint(
-                      size: const Size(500.0, 500.0),
-                      painter: MyPainter(matrizObjeto: matrizObjeto)
+                      size: const Size(512.0, 384.0),
+                      painter: MyPainter(m: objWCS)
                     )
                   ]
                 )
@@ -76,13 +503,75 @@ class Home extends StatelessWidget {
   }
 }
 
+/*
+  const Offset(14, 17), V1
+  const Offset(31, 17), V2
+  const Offset(21, 23), V3
+  const Offset(1, 23),  V4
+  const Offset(17, 1),  V5
+*/
+
 class MyPainter extends CustomPainter {
-  const MyPainter({ required Matrix? matrizObjeto });
+  const MyPainter({ required Matrix? m });
 
   @override
   void paint(Canvas canvas, Size size) {
+    
+
     const pointMode = ui.PointMode.lines;
     final points = [
+      const Offset(14 * 10, 17 * 10), // V1 - V2
+      const Offset(31 * 10, 17 * 10),
+
+      const Offset(14 * 10, 17 * 10), // V1 - V4
+      const Offset(1 * 10, 23 * 10),
+
+      const Offset(14 * 10, 17 * 10), // V1 - V5
+      const Offset(17 * 10, 1 * 10),
+
+      const Offset(31 * 10, 17 * 10), // V2 - V3
+      const Offset(21 * 10, 23 * 10),
+
+      const Offset(31 * 10, 17 * 10), // V2 - V5
+      const Offset(17 * 10, 1 * 10),
+
+      const Offset(21 * 10, 23 * 10), // V3 - V4
+      const Offset(1 * 10, 23 * 10),
+
+      const Offset(21 * 10, 23 * 10), // V3 - V5
+      const Offset(17 * 10, 1 * 10),
+
+      const Offset(1 * 10, 23 * 10),  // V4 - V5
+      const Offset(17 * 10, 1 * 10),
+
+
+      /*
+      const Offset(14 * 10, 17 * 10), // V1 - V2
+      const Offset(31 * 10, 17 * 10),
+
+      const Offset(14 * 10, 17 * 10), // V1 - V4
+      const Offset(1 * 10, 23 * 10),
+
+      const Offset(14 * 10, 17 * 10), // V1 - V5
+      const Offset(17 * 10, 1 * 10),
+
+      const Offset(31 * 10, 17 * 10), // V2 - V3
+      const Offset(21 * 10, 23 * 10),
+
+      const Offset(31 * 10, 17 * 10), // V2 - V5
+      const Offset(17 * 10, 1 * 10),
+
+      const Offset(21 * 10, 23 * 10), // V3 - V4
+      const Offset(1 * 10, 23 * 10),
+
+      const Offset(21 * 10, 23 * 10), // V3 - V5
+      const Offset(17 * 10, 1 * 10),
+
+      const Offset(1 * 10, 23 * 10),  // V4 - V5
+      const Offset(17 * 10, 1 * 10),
+      */
+
+      /*
       const Offset(0, 0),
       const Offset(0, 100),
 
@@ -109,6 +598,7 @@ class MyPainter extends CustomPainter {
 
       const Offset(150, 50),
       const Offset(150, -50),
+      */
     ];
     final paint = Paint()
       ..color = Colors.white
