@@ -9,10 +9,23 @@ void main() {
   ));
 }
 
-class Home extends StatelessWidget {
+Matrix objWCS = Matrix.fromList([
+  [0.0, 0.0, 0.0, 0.0, 0.0],
+  [0.0, 0.0, 0.0, 0.0, 0.0]
+]);
+
+
+class Home extends StatefulWidget {
+
   const Home({ Key? key }) : super(key: key);
 
   @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+   @override
   Widget build(BuildContext context) {
 
     // ponto de vista (PA, PB, PC)
@@ -40,8 +53,6 @@ class Home extends StatelessWidget {
       [1, 1, 7, 7, 4],
       [1, 1, 1, 1, 1]
     ]);
-
-    Matrix objWCS = Matrix.fromList([]);
 
     return Scaffold(
       backgroundColor: const Color(0xFF2e2e2e),
@@ -75,6 +86,8 @@ class Home extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
                   child: Column(
                     children: <Widget>[
+                      // TODO: fazer um drop down aqui
+                      const SizedBox(height: 10.0),
                       const Text(
                         "Ponto de vista:",
                         style: TextStyle(
@@ -457,19 +470,21 @@ class Home extends StatelessWidget {
                             [0, 0, 1]
                           ]);
 
-                          objWCS = tJV * objWCS;
+                          setState((){
+                            objWCS = tJV * objWCS;
 
-                          for (var element in objWCS[0]) {
-                            element.floorToDouble();
-                          }
+                            for (var element in objWCS[0]) {
+                              element.floorToDouble();
+                            }
 
-                          for (var element in objWCS[1]) {
-                            element.floorToDouble();
-                          }
+                            for (var element in objWCS[1]) {
+                              element.floorToDouble();
+                            }
 
-                          for (var element in objWCS[2]) {
-                            element.floorToDouble();
-                          }
+                            for (var element in objWCS[2]) {
+                              element.floorToDouble();
+                            }
+                          });
 
                           //print(objWCS);
                         }
@@ -489,8 +504,8 @@ class Home extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 3,
                     ),
                     CustomPaint(
-                      size: const Size(512.0, 384.0),
-                      painter: MyPainter(m: objWCS)
+                      size: Size(512.0, 384.0),
+                      painter: MyPainter()
                     )
                   ]
                 )
@@ -512,37 +527,51 @@ class Home extends StatelessWidget {
 */
 
 class MyPainter extends CustomPainter {
-  const MyPainter({ required Matrix? m });
+  const MyPainter();
 
   @override
   void paint(Canvas canvas, Size size) {
-    
+
+    double v1X = objWCS[0].elementAt(0);
+    double v1Y = objWCS[1].elementAt(0);
+
+    double v2X = objWCS[0].elementAt(1);
+    double v2Y = objWCS[1].elementAt(1);
+
+    double v3X = objWCS[0].elementAt(2);
+    double v3Y = objWCS[1].elementAt(2);
+
+    double v4X = objWCS[0].elementAt(3);
+    double v4Y = objWCS[1].elementAt(3);
+
+    double v5X = objWCS[0].elementAt(4);
+    double v5Y = objWCS[1].elementAt(4);
 
     const pointMode = ui.PointMode.lines;
     final points = [
-      const Offset(14 * 10, 17 * 10), // V1 - V2
-      const Offset(31 * 10, 17 * 10),
+      Offset(v1X * 10, v1Y * 10), // V1 - V2
+      Offset(v2X * 10, v2Y * 10),
 
-      const Offset(14 * 10, 17 * 10), // V1 - V4
-      const Offset(1 * 10, 23 * 10),
+      Offset(v1X * 10, v1Y * 10), // V1 - V4
+      Offset(v4X * 10, v4Y * 10),
 
-      const Offset(14 * 10, 17 * 10), // V1 - V5
-      const Offset(17 * 10, 1 * 10),
+      Offset(v1X * 10, v1Y * 10), // V1 - V5
+      Offset(v5X * 10, v5Y * 10),
 
-      const Offset(31 * 10, 17 * 10), // V2 - V3
-      const Offset(21 * 10, 23 * 10),
+      Offset(v2X * 10, v2Y * 10), // V2 - V3
+      Offset(v3X * 10, v3Y * 10),
 
-      const Offset(31 * 10, 17 * 10), // V2 - V5
-      const Offset(17 * 10, 1 * 10),
+      Offset(v2X * 10, v2Y * 10), // V2 - V5
+      Offset(v5X * 10, v5Y * 10),
 
-      const Offset(21 * 10, 23 * 10), // V3 - V4
-      const Offset(1 * 10, 23 * 10),
+      Offset(v3X * 10, v3Y * 10), // V3 - V4
+      Offset(v4X * 10, v4Y * 10),
 
-      const Offset(21 * 10, 23 * 10), // V3 - V5
-      const Offset(17 * 10, 1 * 10),
+      Offset(v3X * 10, v3Y * 10), // V3 - V5
+      Offset(v5X * 10, v5Y * 10),
 
-      const Offset(1 * 10, 23 * 10),  // V4 - V5
-      const Offset(17 * 10, 1 * 10),
+      Offset(v4X * 10, v4Y * 10),  // V4 - V5
+      Offset(v5X * 10, v5Y * 10),
 
 
       /*
