@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+import 'dart:core';
 import 'package:ml_linalg/linalg.dart';
 
 void main() {
@@ -13,7 +14,6 @@ Matrix objWCS = Matrix.fromList([
   [0.0, 0.0, 0.0, 0.0, 0.0],
   [0.0, 0.0, 0.0, 0.0, 0.0]
 ]);
-
 
 class Home extends StatefulWidget {
 
@@ -53,6 +53,8 @@ class _HomeState extends State<Home> {
       [1, 1, 7, 7, 4],
       [1, 1, 1, 1, 1]
     ]);
+
+
 
     return Scaffold(
       backgroundColor: const Color(0xFF2e2e2e),
@@ -161,7 +163,7 @@ class _HomeState extends State<Home> {
                       ),
                       const SizedBox(height: 30.0),
                       const Text(
-                        "Pontos do plano:",
+                        "Definição do vetor normal:",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.0
@@ -384,110 +386,134 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                       const SizedBox(height: 30.0),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.deepOrange,
-                          fixedSize: const Size(100.0, 60.0)
-                        ),
-                        child: const Text(
-                          "Iniciar",
-                          style: TextStyle(
-                            color: Colors.white
+                      RepaintBoundary(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.deepOrange,
+                            fixedSize: const Size(100.0, 60.0)
                           ),
-                        ),
-                        onPressed: (){
-                          int x0 = 0, y0 = 0, z0 = 0;
+                          child: const Text(
+                            "Iniciar",
+                            style: TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          onPressed: (){
+                            int x0 = 0, y0 = 0, z0 = 0;
 
-                          double d0, d1, d;
+                            double d0, d1, d;
 
-                          double a = double.parse(controllerA.text);
-                          double b = double.parse(controllerB.text);
-                          double c = double.parse(controllerC.text);
-
-
-                          double x1 = double.parse(controllerP1x.text);
-                          double x2 = double.parse(controllerP2x.text);
-                          double x3 = double.parse(controllerP3x.text);
-
-                          double y1 = double.parse(controllerP1y.text);
-                          double y2 = double.parse(controllerP2y.text);
-                          double y3 = double.parse(controllerP3y.text);
-
-                          double z1 = double.parse(controllerP1z.text);
-                          double z2 = double.parse(controllerP2z.text);
-                          double z3 = double.parse(controllerP3z.text);
+                            double a = double.parse(controllerA.text);
+                            double b = double.parse(controllerB.text);
+                            double c = double.parse(controllerC.text);
 
 
-                          double nx = (y1 - y2) * (z3 - z2) - (y3 - y2) * (z1 - z2);
+                            double x1 = double.parse(controllerP1x.text);
+                            double x2 = double.parse(controllerP2x.text);
+                            double x3 = double.parse(controllerP3x.text);
 
-                          double ny = -((x1 - x2) * (z3 - z2) - (x3 - x2) * (z1 - z2));
+                            double y1 = double.parse(controllerP1y.text);
+                            double y2 = double.parse(controllerP2y.text);
+                            double y3 = double.parse(controllerP3y.text);
 
-                          double nz = (x1 - x2) * (y3 - y2) - (x3 - x2) * (y1 - y2);
+                            double z1 = double.parse(controllerP1z.text);
+                            double z2 = double.parse(controllerP2z.text);
+                            double z3 = double.parse(controllerP3z.text);
 
-                          d0 = x0*nx + y0*ny + z0*nz;
 
-                          d1 = a*nx + b*ny + c*nz;
+                            //double nx = (y1 - y2) * (z3 - z2) - (y3 - y2) * (z1 - z2);
 
-                          d = d0 - d1;
+                            //double ny = -((x1 - x2) * (z3 - z2) - (x3 - x2) * (z1 - z2));
 
-                          Matrix matrizPerspectiva = Matrix.fromList([
-                            [d+a*nx, a*ny, a*nz, -a*d0],
-                            [b*nx, d+b*ny, b*nz, -b*d0],
-                            [c*nx, c*ny, d+c*nz, -c*d0],
-                            [nx, ny, nz, 1]
-                          ]);
+                            //double nz = (x1 - x2) * (y3 - y2) - (x3 - x2) * (y1 - y2);
 
-                          matrizObjeto = matrizPerspectiva * matrizObjeto;
+                            double nx = 0.0;
+                            double ny = 0.0;
+                            double nz = 1.0;
 
-                          List<double> lastRow = matrizObjeto[3].toList();
+                            d0 = x0*nx + y0*ny + z0*nz;
 
-                          for(dynamic r in matrizObjeto){
-                            for(int k = 0; k < matrizObjeto.columnsNum; k++){
-                              r[k] = r[k] / lastRow[k];
+                            d1 = a*nx + b*ny + c*nz;
+
+                            d = d0 - d1;
+
+                            Matrix matrizPerspectiva = Matrix.fromList([
+                              [d+a*nx, a*ny, a*nz, -a*d0],
+                              [b*nx, d+b*ny, b*nz, -b*d0],
+                              [c*nx, c*ny, d+c*nz, -c*d0],
+                              [nx, ny, nz, -d1]
+                            ]);
+
+                            matrizObjeto = matrizPerspectiva * matrizObjeto;
+
+                            
+
+                            List<double> lastRow = matrizObjeto[3].toList();
+
+                            //print(matrizObjeto.toList().first);
+
+                            for(dynamic r in matrizObjeto){
+                              for(int k = 0; k < matrizObjeto.columnsNum; k++){
+                                r[k] = r[k] / lastRow[k];
+                              }
                             }
+
+                            List<List<double>> aux = [
+                              [],
+                              []
+                            ];
+
+                            int cont = 0;
+                            for(dynamic p in matrizObjeto){
+                              for(int j = 0; j < matrizObjeto.columnsNum; j++){
+                                aux[cont].add(p[j]);
+                              }
+                              if(cont == 1){
+                                break;
+                              }
+                              cont++;
+                            }
+
+                            objWCS = Matrix.fromList([
+                              aux[0],
+                              aux[1],
+                              [1.0, 1.0, 1.0, 1.0, 1.0]
+                            ]);
+
+                            double uMin = 0.0, vMin = 0.0, uMax = 512.0, vMax = 384.0;
+
+                            double xMin = objWCS[0].min().floorToDouble();
+                            double xMax = objWCS[0].max().ceilToDouble();
+
+                            double yMin = objWCS[1].min().floorToDouble();
+                            double yMax = objWCS[1].max().ceilToDouble();
+
+                            double sx = (uMax - uMin) / (xMax - xMin);
+                            double sy = (vMax - vMin) / (yMax - yMin);
+
+                            Matrix tJV = Matrix.fromList([
+                              [sx, 0.0, uMin - sx * xMin],
+                              [0.0, -sy, sy * yMax + vMin],
+                              [0.0, 0.0, 1.0]
+                            ]);
+
+                            setState((){
+                              objWCS = tJV * objWCS;
+
+                              for (var element in objWCS[0]) {
+                                element.floorToDouble();
+                              }
+
+                              for (var element in objWCS[1]) {
+                                element.floorToDouble();
+                              }
+
+                              for (var element in objWCS[2]) {
+                                element.floorToDouble();
+                              }
+                            });
                           }
-
-                          objWCS = Matrix.fromList([
-                            matrizObjeto[0].toList(),
-                            matrizObjeto[1].toList(),
-                            [1, 1, 1, 1, 1]
-                          ]);
-
-                          double uMin = 0.0, vMin = 0.0, uMax = 512.0, vMax = 384.0;
-
-                          double xMin = objWCS[0].min().ceilToDouble();
-                          double xMax = objWCS[0].max().ceilToDouble();
-
-                          double yMin = objWCS[1].min().ceilToDouble();
-                          double yMax = objWCS[1].max().ceilToDouble();
-
-                          double sx = (uMax - uMin) / (xMax - xMin);
-                          double sy = (vMax - vMin) / (yMax - yMin);
-
-                          Matrix tJV = Matrix.fromList([
-                            [sx, 0, uMin - sx * xMin],
-                            [0, -sy, sy * yMax + vMin],
-                            [0, 0, 1]
-                          ]);
-
-                          setState((){
-                            objWCS = tJV * objWCS;
-
-                            for (var element in objWCS[0]) {
-                              element.floorToDouble();
-                            }
-
-                            for (var element in objWCS[1]) {
-                              element.floorToDouble();
-                            }
-
-                            for (var element in objWCS[2]) {
-                              element.floorToDouble();
-                            }
-                          });
-
-                          //print(objWCS);
-                        }
+                        )
                       )
                     ],
                   ),
@@ -500,12 +526,12 @@ class _HomeState extends State<Home> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 3,
-                    ),
+                    //SizedBox(
+                    //  height: MediaQuery.of(context).size.height / 3,
+                    //),
                     CustomPaint(
-                      size: Size(512.0, 384.0),
-                      painter: MyPainter()
+                      size: const Size(512.0, 384.0),
+                      painter: MyPainter(mat: objWCS)
                     )
                   ]
                 )
@@ -527,51 +553,53 @@ class _HomeState extends State<Home> {
 */
 
 class MyPainter extends CustomPainter {
-  const MyPainter();
+  Matrix? mat;
+
+  MyPainter({@required this.mat});
 
   @override
   void paint(Canvas canvas, Size size) {
 
-    double v1X = objWCS[0].elementAt(0);
-    double v1Y = objWCS[1].elementAt(0);
+    double v1X = mat![0].elementAt(0);
+    double v1Y = mat![1].elementAt(0);
 
-    double v2X = objWCS[0].elementAt(1);
-    double v2Y = objWCS[1].elementAt(1);
+    double v2X = mat![0].elementAt(1);
+    double v2Y = mat![1].elementAt(1);
 
-    double v3X = objWCS[0].elementAt(2);
-    double v3Y = objWCS[1].elementAt(2);
+    double v3X = mat![0].elementAt(2);
+    double v3Y = mat![1].elementAt(2);
 
-    double v4X = objWCS[0].elementAt(3);
-    double v4Y = objWCS[1].elementAt(3);
+    double v4X = mat![0].elementAt(3);
+    double v4Y = mat![1].elementAt(3);
 
-    double v5X = objWCS[0].elementAt(4);
-    double v5Y = objWCS[1].elementAt(4);
+    double v5X = mat![0].elementAt(4);
+    double v5Y = mat![1].elementAt(4);
 
     const pointMode = ui.PointMode.lines;
     final points = [
-      Offset(v1X * 10, v1Y * 10), // V1 - V2
-      Offset(v2X * 10, v2Y * 10),
+      Offset(v1X, v1Y), // V1 - V2
+      Offset(v2X, v2Y),
 
-      Offset(v1X * 10, v1Y * 10), // V1 - V4
-      Offset(v4X * 10, v4Y * 10),
+      Offset(v1X, v1Y), // V1 - V4
+      Offset(v4X, v4Y),
 
-      Offset(v1X * 10, v1Y * 10), // V1 - V5
-      Offset(v5X * 10, v5Y * 10),
+      Offset(v1X, v1Y), // V1 - V5
+      Offset(v5X, v5Y),
 
-      Offset(v2X * 10, v2Y * 10), // V2 - V3
-      Offset(v3X * 10, v3Y * 10),
+      Offset(v2X, v2Y), // V2 - V3
+      Offset(v3X, v3Y),
 
-      Offset(v2X * 10, v2Y * 10), // V2 - V5
-      Offset(v5X * 10, v5Y * 10),
+      Offset(v2X, v2Y), // V2 - V5
+      Offset(v5X, v5Y),
 
-      Offset(v3X * 10, v3Y * 10), // V3 - V4
-      Offset(v4X * 10, v4Y * 10),
+      Offset(v3X, v3Y), // V3 - V4
+      Offset(v4X, v4Y),
 
-      Offset(v3X * 10, v3Y * 10), // V3 - V5
-      Offset(v5X * 10, v5Y * 10),
+      Offset(v3X, v3Y), // V3 - V5
+      Offset(v5X, v5Y),
 
-      Offset(v4X * 10, v4Y * 10),  // V4 - V5
-      Offset(v5X * 10, v5Y * 10),
+      Offset(v4X, v4Y),  // V4 - V5
+      Offset(v5X, v5Y),
 
 
       /*
@@ -638,6 +666,6 @@ class MyPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+    return (oldDelegate as MyPainter).mat != mat;
   }
 }
