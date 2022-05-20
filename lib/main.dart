@@ -28,20 +28,24 @@ class _HomeState extends State<Home> {
    @override
   Widget build(BuildContext context) {
 
-    // ponto de vista (PA, PB, PC)
+    // ponto de vista (a, b, c)
     TextEditingController controllerA = TextEditingController();
     TextEditingController controllerB = TextEditingController();
     TextEditingController controllerC = TextEditingController();
 
-    // pontos do plano (P1, P2, P3)
+    /* pontos do vetor normal (P1, P2, P3) */
+
+    // P1 = (X1, Y1, Z1)
     TextEditingController controllerP1x = TextEditingController();
     TextEditingController controllerP1y = TextEditingController();
     TextEditingController controllerP1z = TextEditingController();
 
+    // P2 = (X2, Y2, Z2)
     TextEditingController controllerP2x = TextEditingController();
     TextEditingController controllerP2y = TextEditingController();
     TextEditingController controllerP2z = TextEditingController();
 
+    // P3 = (X3, Y3, Z3)
     TextEditingController controllerP3x = TextEditingController();
     TextEditingController controllerP3y = TextEditingController();
     TextEditingController controllerP3z = TextEditingController();
@@ -53,8 +57,6 @@ class _HomeState extends State<Home> {
       [1, 1, 7, 7, 4],
       [1, 1, 1, 1, 1]
     ]);
-
-
 
     return Scaffold(
       backgroundColor: const Color(0xFF2e2e2e),
@@ -105,13 +107,15 @@ class _HomeState extends State<Home> {
                               controller: controllerA,
                               cursorColor: Colors.white,
                               style: const TextStyle(color: Colors.white),
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "20",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -125,13 +129,15 @@ class _HomeState extends State<Home> {
                               controller: controllerB,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "10",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -145,13 +151,15 @@ class _HomeState extends State<Home> {
                               controller: controllerC,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "30",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -185,13 +193,15 @@ class _HomeState extends State<Home> {
                               controller: controllerP1x,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "1",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -205,13 +215,15 @@ class _HomeState extends State<Home> {
                               controller: controllerP1y,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "1",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -225,13 +237,15 @@ class _HomeState extends State<Home> {
                               controller: controllerP1z,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "7",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -257,13 +271,15 @@ class _HomeState extends State<Home> {
                               controller: controllerP2x,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "7",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -277,13 +293,15 @@ class _HomeState extends State<Home> {
                               controller: controllerP2y,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "1",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -297,13 +315,15 @@ class _HomeState extends State<Home> {
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
                               controller: controllerP2z,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "7",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -329,13 +349,15 @@ class _HomeState extends State<Home> {
                               controller: controllerP3x,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "4",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -349,13 +371,15 @@ class _HomeState extends State<Home> {
                               controller: controllerP3y,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "7",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -369,13 +393,15 @@ class _HomeState extends State<Home> {
                               controller: controllerP3z,
                               style: const TextStyle(color: Colors.white),
                               cursorColor: Colors.white,
-                              decoration: const InputDecoration(
-                                enabledBorder: OutlineInputBorder(
+                              decoration: InputDecoration(
+                                hintText: "4",
+                                hintStyle: TextStyle(color: Colors.grey.shade700),
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.white
                                   )
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.deepOrange
                                   )
@@ -421,15 +447,15 @@ class _HomeState extends State<Home> {
                             double z3 = double.parse(controllerP3z.text);
 
 
-                            //double nx = (y1 - y2) * (z3 - z2) - (y3 - y2) * (z1 - z2);
+                            double nx = (y1 - y2) * (z3 - z2) - (y3 - y2) * (z1 - z2);
 
-                            //double ny = -((x1 - x2) * (z3 - z2) - (x3 - x2) * (z1 - z2));
+                            double ny = -((x1 - x2) * (z3 - z2) - (x3 - x2) * (z1 - z2));
 
-                            //double nz = (x1 - x2) * (y3 - y2) - (x3 - x2) * (y1 - y2);
+                            double nz = (x1 - x2) * (y3 - y2) - (x3 - x2) * (y1 - y2);
 
-                            double nx = 0.0;
-                            double ny = 0.0;
-                            double nz = 1.0;
+                            //double nx = 0.0;
+                            //double ny = 0.0;
+                            //double nz = 1.0;
 
                             d0 = x0*nx + y0*ny + z0*nz;
 
@@ -446,11 +472,7 @@ class _HomeState extends State<Home> {
 
                             matrizObjeto = matrizPerspectiva * matrizObjeto;
 
-                            
-
                             List<double> lastRow = matrizObjeto[3].toList();
-
-                            //print(matrizObjeto.toList().first);
 
                             for(dynamic r in matrizObjeto){
                               for(int k = 0; k < matrizObjeto.columnsNum; k++){
@@ -523,17 +545,12 @@ class _HomeState extends State<Home> {
             Expanded(
               flex: 7,
               child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    //SizedBox(
-                    //  height: MediaQuery.of(context).size.height / 3,
-                    //),
-                    CustomPaint(
-                      size: const Size(512.0, 384.0),
-                      painter: MyPainter(mat: objWCS)
-                    )
-                  ]
+                child: Align(
+                  alignment: Alignment.center,
+                  child: CustomPaint(
+                    size: const Size(512.0, 384.0),
+                    painter: MyPainter(mat: objWCS)
+                  )
                 )
               )
             )
@@ -600,62 +617,6 @@ class MyPainter extends CustomPainter {
 
       Offset(v4X, v4Y),  // V4 - V5
       Offset(v5X, v5Y),
-
-
-      /*
-      const Offset(14 * 10, 17 * 10), // V1 - V2
-      const Offset(31 * 10, 17 * 10),
-
-      const Offset(14 * 10, 17 * 10), // V1 - V4
-      const Offset(1 * 10, 23 * 10),
-
-      const Offset(14 * 10, 17 * 10), // V1 - V5
-      const Offset(17 * 10, 1 * 10),
-
-      const Offset(31 * 10, 17 * 10), // V2 - V3
-      const Offset(21 * 10, 23 * 10),
-
-      const Offset(31 * 10, 17 * 10), // V2 - V5
-      const Offset(17 * 10, 1 * 10),
-
-      const Offset(21 * 10, 23 * 10), // V3 - V4
-      const Offset(1 * 10, 23 * 10),
-
-      const Offset(21 * 10, 23 * 10), // V3 - V5
-      const Offset(17 * 10, 1 * 10),
-
-      const Offset(1 * 10, 23 * 10),  // V4 - V5
-      const Offset(17 * 10, 1 * 10),
-      */
-
-      /*
-      const Offset(0, 0),
-      const Offset(0, 100),
-
-      const Offset(0, 100),
-      const Offset(100, 100),
-
-      const Offset(100, 100),
-      const Offset(100, 0),
-
-      const Offset(100, 0),
-      const Offset(0, 0),
-
-      const Offset(0, 0),
-      const Offset(50, -50),
-
-      const Offset(100, 0),
-      const Offset(150, -50),
-
-      const Offset(50, -50),
-      const Offset(150, -50),
-
-      const Offset(100, 100),
-      const Offset(150, 50),
-
-      const Offset(150, 50),
-      const Offset(150, -50),
-      */
     ];
     final paint = Paint()
       ..color = Colors.white
