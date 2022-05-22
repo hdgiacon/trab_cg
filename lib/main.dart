@@ -90,7 +90,6 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
                   child: Column(
                     children: <Widget>[
-                      // TODO: fazer um drop down aqui
                       const SizedBox(height: 10.0),
                       const Text(
                         "Ponto de vista:",
@@ -429,11 +428,12 @@ class _HomeState extends State<Home> {
 
                             double d0, d1, d;
 
+                            // valores do ponto de vista passados nos TextField's
                             double a = double.parse(controllerA.text);
                             double b = double.parse(controllerB.text);
                             double c = double.parse(controllerC.text);
 
-
+                            // Pontos do vetor normal passados nos TextField's
                             double x1 = double.parse(controllerP1x.text);
                             double x2 = double.parse(controllerP2x.text);
                             double x3 = double.parse(controllerP3x.text);
@@ -447,15 +447,16 @@ class _HomeState extends State<Home> {
                             double z3 = double.parse(controllerP3z.text);
 
 
+
+                            // cálculos de nx, ny e nz
+
                             double nx = (y1 - y2) * (z3 - z2) - (y3 - y2) * (z1 - z2);
 
                             double ny = -((x1 - x2) * (z3 - z2) - (x3 - x2) * (z1 - z2));
 
                             double nz = (x1 - x2) * (y3 - y2) - (x3 - x2) * (y1 - y2);
 
-                            //double nx = 0.0;
-                            //double ny = 0.0;
-                            //double nz = 1.0;
+                            // cálculos de d0, d1 e d
 
                             d0 = x0*nx + y0*ny + z0*nz;
 
@@ -463,6 +464,7 @@ class _HomeState extends State<Home> {
 
                             d = d0 - d1;
 
+                            // montando a matriz de perspectiva
                             Matrix matrizPerspectiva = Matrix.fromList([
                               [d+a*nx, a*ny, a*nz, -a*d0],
                               [b*nx, d+b*ny, b*nz, -b*d0],
@@ -470,10 +472,12 @@ class _HomeState extends State<Home> {
                               [nx, ny, nz, -d1]
                             ]);
 
+                            // calculo da nova matriz de objeto
                             matrizObjeto = matrizPerspectiva * matrizObjeto;
 
                             List<double> lastRow = matrizObjeto[3].toList();
 
+                            // passando de coordenadas Homogêneas para Cartesianas
                             for(dynamic r in matrizObjeto){
                               for(int k = 0; k < matrizObjeto.columnsNum; k++){
                                 r[k] = r[k] / lastRow[k];
@@ -496,11 +500,15 @@ class _HomeState extends State<Home> {
                               cont++;
                             }
 
+                            // construção da matriz de coordenadas do Mundo (WCS)
                             objWCS = Matrix.fromList([
                               aux[0],
                               aux[1],
                               [1.0, 1.0, 1.0, 1.0, 1.0]
                             ]);
+
+
+                            // cálculo dos valores necessários para Janela-ViewPort
 
                             double uMin = 0.0, vMin = 0.0, uMax = 512.0, vMax = 384.0;
 
@@ -513,14 +521,20 @@ class _HomeState extends State<Home> {
                             double sx = (uMax - uMin) / (xMax - xMin);
                             double sy = (vMax - vMin) / (yMax - yMin);
 
+                            // construção da matriz de transformação Janela-Viewport
                             Matrix tJV = Matrix.fromList([
                               [sx, 0.0, uMin - sx * xMin],
                               [0.0, -sy, sy * yMax + vMin],
                               [0.0, 0.0, 1.0]
                             ]);
 
+                            // atualiza a tela em tempo de execução
                             setState((){
+
+                              // cálculo da matriz de objeto em coordenadas Janela-Viewport
                               objWCS = tJV * objWCS;
+
+                              // arredondamento para baixo dos valores da matriz
 
                               for (var element in objWCS[0]) {
                                 element.floorToDouble();
@@ -561,13 +575,6 @@ class _HomeState extends State<Home> {
   }
 }
 
-/*
-  const Offset(14, 17), V1
-  const Offset(31, 17), V2
-  const Offset(21, 23), V3
-  const Offset(1, 23),  V4
-  const Offset(17, 1),  V5
-*/
 
 class MyPainter extends CustomPainter {
   Matrix? mat;
@@ -576,6 +583,8 @@ class MyPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+
+    // obtendo os pontos da matriz final
 
     double v1X = mat![0].elementAt(0);
     double v1Y = mat![1].elementAt(0);
@@ -592,6 +601,7 @@ class MyPainter extends CustomPainter {
     double v5X = mat![0].elementAt(4);
     double v5Y = mat![1].elementAt(4);
 
+    // plotagem dos pontos no Canvas para a pirâmide
     const pointMode = ui.PointMode.lines;
     final points = [
       Offset(v1X, v1Y), // V1 - V2
